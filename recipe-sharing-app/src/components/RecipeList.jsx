@@ -1,23 +1,31 @@
-import React from 'react';
 import { useRecipeStore } from '../store/recipeStore';
 
 const RecipeList = () => {
-  const filteredRecipes = useRecipeStore(state => state.filteredRecipes);
+  const recipes = useRecipeStore(state => state.recipes);
+  const favorites = useRecipeStore(state => state.favorites);
+  const addFavorite = useRecipeStore(state => state.addFavorite);
+  const removeFavorite = useRecipeStore(state => state.removeFavorite);
+
+  const toggleFavorite = (id) => {
+    favorites.includes(id) ? removeFavorite(id) : addFavorite(id);
+  };
 
   return (
     <div>
-      {filteredRecipes.length > 0 ? (
-        filteredRecipes.map((recipe, index) => (
-          <div key={index} className="border p-4 mb-2 rounded shadow">
-            <h2 className="text-xl font-semibold">{recipe.title}</h2>
-            <p>{recipe.description}</p>
-          </div>
-        ))
-      ) : (
-        <p>No recipes found.</p>
-      )}
+      <h2>All Recipes</h2>
+      {recipes.map(recipe => (
+        <div key={recipe.id}>
+          <h3>{recipe.title}</h3>
+          <p>{recipe.description}</p>
+          <button onClick={() => toggleFavorite(recipe.id)}>
+            {favorites.includes(recipe.id) ? 'Unfavorite' : 'Favorite'}
+          </button>
+        </div>
+      ))}
     </div>
   );
 };
 
 export default RecipeList;
+
+
