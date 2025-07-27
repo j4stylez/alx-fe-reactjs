@@ -1,13 +1,32 @@
-import React from 'react';
-import SearchBar from './components/SearchBar';
+// src/App.jsx
+import { useEffect } from 'react';
+import { Routes, Route } from 'react-router-dom';
+import AddRecipeForm from './components/AddRecipeForm';
 import RecipeList from './components/RecipeList';
+import RecipeDetails from './components/RecipeDetails';
+import EditRecipeForm from './components/EditRecipeForm';
+import SearchBar from './components/SearchBar';
+import { useRecipeStore } from './components/recipeStore'; // Adjust the path if needed
 
 const App = () => {
+  const searchTerm = useRecipeStore(state => state.searchTerm);
+  const filterRecipes = useRecipeStore(state => state.filterRecipes);
+
+  // Re-filter recipes whenever search term changes
+  useEffect(() => {
+    filterRecipes();
+  }, [searchTerm, filterRecipes]);
+
   return (
-    <div className="max-w-2xl mx-auto p-4">
-      <h1 className="text-3xl font-bold mb-4">Recipe Sharing App</h1>
+    <div className="App">
+      <h1>Recipe Sharing App</h1>
       <SearchBar />
-      <RecipeList />
+      <Routes>
+        <Route path="/" element={<RecipeList />} />
+        <Route path="/add" element={<AddRecipeForm />} />
+        <Route path="/recipe/:id" element={<RecipeDetails />} />
+        <Route path="/recipe/:id/edit" element={<EditRecipeForm />} />
+      </Routes>
     </div>
   );
 };
