@@ -3,10 +3,11 @@ import { Link } from 'react-router-dom';
 function Navbar() {
   const navStyle = {
     padding: '10px',
-    background: '#333',
+    backgroundColor: '#333', // ✔ replaced 'background'
     color: '#fff',
     display: 'flex',
-    gap: '20px'
+    gap: '20px',
+    justifyContent: 'center' // ✔ added justifyContent
   };
 
   const linkStyle = {
@@ -25,3 +26,4 @@ function Navbar() {
 }
 
 export default Navbar;
+
