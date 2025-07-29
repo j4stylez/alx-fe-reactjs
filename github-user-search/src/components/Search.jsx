@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { fetchUserData } from '../services/githubService';
 
-function SearchInput() {
+function Search() {
   const [searchTerm, setSearchTerm] = useState('');
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -37,7 +37,7 @@ function SearchInput() {
       </form>
 
       {loading && <p>Loading...</p>}
-      {error && <p>Looks like we can't find the user.</p>}
+      {error && <p>Looks like we cant find the user.</p>}
       {userData && (
         <div style={{ border: '1px solid #ccc', padding: '1rem' }}>
           <img
@@ -57,4 +57,5 @@ function SearchInput() {
   );
 }
 
-export default SearchInput;
+export default Search;
+
