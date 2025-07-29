@@ -3,7 +3,7 @@ import { fetchUserData } from '../services/githubService';
 
 function Search() {
   const [username, setUsername] = useState('');
-  const [userData, setUserData] = useState(null);
+  const [users, setUsers] = useState([]);  // array to hold multiple users
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
@@ -11,12 +11,12 @@ function Search() {
     e.preventDefault();
     setLoading(true);
     setError(false);
-    setUserData(null);
+    setUsers([]);
 
     try {
       const token = import.meta.env.VITE_APP_GITHUB_API_KEY;
       const data = await fetchUserData(username, token);
-      setUserData(data);
+      setUsers(data);
     } catch (err) {
       setError(true);
     } finally {
@@ -47,32 +47,35 @@ function Search() {
       {loading && <p className="mt-4">Loading...</p>}
       {error && <p className="mt-4 text-red-500">Looks like we can't find the user.</p>}
 
-      {userData && (
-        <div className="mt-6 border rounded p-4 flex items-center gap-4">
-          <img
-            src={userData.avatar_url}
-            alt={userData.login}
-            className="w-16 h-16 rounded-full"
-          />
-          <div>
-            <h2 className="text-lg font-semibold">{userData.name || userData.login}</h2>
-            <p>
-              <a
-                href={userData.html_url}
-                target="_blank"
-                rel="noreferrer"
-                className="text-blue-500 underline"
-              >
-                View Profile
-              </a>
-            </p>
+      <div className="mt-6 grid gap-4">
+        {users.map(user => (
+          <div key={user.id} className="border rounded p-4 flex items-center gap-4">
+            <img
+              src={user.avatar_url}
+              alt={user.login}
+              className="w-16 h-16 rounded-full"
+            />
+            <div>
+              <h2 className="text-lg font-semibold">{user.login}</h2>
+              <p>
+                <a
+                  href={user.html_url}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-blue-500 underline"
+                >
+                  View Profile
+                </a>
+              </p>
+            </div>
           </div>
-        </div>
-      )}
+        ))}
+      </div>
     </div>
   );
 }
 
 export default Search;
+
 
 
