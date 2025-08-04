@@ -3,6 +3,8 @@ import { create } from 'zustand';
 
 export const useRecipeStore = create((set) => ({
   recipes: [],
+  favorites: [],
+  recommendations: [],
   searchTerm: '',
 
   addRecipe: (recipe) =>
@@ -31,7 +33,28 @@ export const useRecipeStore = create((set) => ({
     set(() => ({
       searchTerm: term,
     })),
+
+  // Add to favorites
+  addFavorite: (id) =>
+    set((state) => ({
+      favorites: state.favorites.includes(id)
+        ? state.favorites
+        : [...state.favorites, id],
+    })),
+
+  // Remove from favorites
+  removeFavorite: (id) =>
+    set((state) => ({
+      favorites: state.favorites.filter((favId) => favId !== id),
+    })),
+
+  // Set recommendations
+  setRecommendations: (recs) =>
+    set(() => ({
+      recommendations: recs,
+    })),
 }));
+
 
 
 
