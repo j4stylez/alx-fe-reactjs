@@ -1,6 +1,15 @@
 import axios from 'axios';
 
-const BASE_URL = 'https://api.github.com';
+export async function fetchUserData(username, token) {
+  try {
+    const headers = token ? { Authorization: `token ${token}` } : {};
+    const url = `https://api.github.com/search/users?q=${encodeURIComponent(username)}`;
+    const response = await axios.get(url, { headers });
+    return response.data.items;
+  } catch (error) {
+    throw error;
+  }
+}
 
 export async function advancedUserSearch({ username, location, minRepos }, token) {
   try {
@@ -12,12 +21,13 @@ export async function advancedUserSearch({ username, location, minRepos }, token
 
     const headers = token ? { Authorization: `token ${token}` } : {};
 
-    const response = await axios.get(`${BASE_URL}/search/users?q=${encodeURIComponent(query)}`, {
-      headers,
-    });
-
+    const url = `https://api.github.com/search/users?q=${encodeURIComponent(query)}`;
+    const response = await axios.get(url, { headers });
     return response.data.items;
   } catch (error) {
     throw error;
   }
 }
+
+
+
