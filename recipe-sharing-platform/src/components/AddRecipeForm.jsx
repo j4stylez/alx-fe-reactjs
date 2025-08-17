@@ -11,9 +11,8 @@ const AddRecipeForm = () => {
   const navigate = useNavigate();
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value } = e.target; // Access e.target.value via destructuring
     setFormData({ ...formData, [name]: value });
-    // Clear error for the field being edited
     setErrors({ ...errors, [name]: '' });
   };
 
@@ -39,12 +38,11 @@ const AddRecipeForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validateForm()) {
-      // Simulate adding recipe to data.json (in a real app, this would be an API call)
       console.log('New Recipe:', {
-        id: Date.now(), // Temporary ID
+        id: Date.now(),
         title: formData.title,
-        summary: formData.title, // Placeholder summary
-        image: 'https://via.placeholder.com/300', // Placeholder image
+        summary: formData.title,
+        image: 'https://via.placeholder.com/300',
         ingredients: formData.ingredients
           .split('\n')
           .map((item) => item.trim())
@@ -54,10 +52,8 @@ const AddRecipeForm = () => {
           .map((item) => item.trim())
           .filter((item) => item),
       });
-      // Reset form
       setFormData({ title: '', ingredients: '', instructions: '' });
       setErrors({});
-      // Navigate back to home page
       navigate('/');
     }
   };
@@ -77,7 +73,6 @@ const AddRecipeForm = () => {
         onSubmit={handleSubmit}
         className="bg-white p-6 rounded-lg shadow-md"
       >
-        {/* Title Field */}
         <div className="mb-4">
           <label
             htmlFor="title"
@@ -100,8 +95,6 @@ const AddRecipeForm = () => {
             <p className="text-red-500 text-sm mt-1">{errors.title}</p>
           )}
         </div>
-
-        {/* Ingredients Field */}
         <div className="mb-4">
           <label
             htmlFor="ingredients"
@@ -124,8 +117,6 @@ const AddRecipeForm = () => {
             <p className="text-red-500 text-sm mt-1">{errors.ingredients}</p>
           )}
         </div>
-
-        {/* Instructions Field */}
         <div className="mb-6">
           <label
             htmlFor="instructions"
@@ -148,8 +139,6 @@ const AddRecipeForm = () => {
             <p className="text-red-500 text-sm mt-1">{errors.instructions}</p>
           )}
         </div>
-
-        {/* Submit Button */}
         <button
           type="submit"
           className="w-full bg-blue-500 text-white p-3 rounded-lg hover:bg-blue-600 transition-colors duration-200 font-semibold"
