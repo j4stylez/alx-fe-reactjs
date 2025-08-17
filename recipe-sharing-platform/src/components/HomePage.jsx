@@ -6,16 +6,23 @@ const HomePage = () => {
   const [recipes, setRecipes] = useState([]);
 
   useEffect(() => {
-    // Simulating API call with static JSON data
     setRecipes(recipeData);
   }, []);
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl md:text-4xl font-bold text-center mb-8 text-gray-800">
-        Recipe Sharing Platform
-      </h1>
-      
+      <div className="flex justify-between items-center mb-8">
+        <h1 className="text-3xl md:text-4xl font-bold text-gray-800">
+          Recipe Sharing Platform
+        </h1>
+        <Link
+          to="/add-recipe"
+          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors duration-200"
+        >
+          Add New Recipe
+        </Link>
+      </div>
+
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {recipes.map((recipe) => (
           <div
