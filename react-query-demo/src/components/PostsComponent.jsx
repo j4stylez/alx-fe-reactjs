@@ -20,6 +20,9 @@ function PostsComponent() {
     queryKey: ['posts', { page, limit }],
     queryFn: fetchPosts,
     keepPreviousData: true, // Keep previous data while fetching new data
+    staleTime: 1000 * 60 * 5, // 5 minutes stale time
+    cacheTime: 1000 * 60 * 10, // 10 minutes cache time
+    refetchOnWindowFocus: false, // Disable refetching on window focus
   });
 
   const handleRefetch = () => {
@@ -38,6 +41,8 @@ function PostsComponent() {
     queryClient.prefetchQuery({
       queryKey: ['posts', { page: page + 1, limit }],
       queryFn: fetchPosts,
+      staleTime: 1000 * 60 * 5, // Match staleTime for consistency
+      cacheTime: 1000 * 60 * 10, // Match cacheTime for consistency
     });
   };
 
