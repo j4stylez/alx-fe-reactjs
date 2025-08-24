@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import Home from './components/Home';
 import Profile from './components/Profile';
 import Post from './components/Post';
+import BlogPost from './components/BlogPost'; // Added BlogPost import
 import Login from './components/Login';
 import ProtectedRoute from './components/ProtectedRoute';
 import NotFound from './components/NotFound';
@@ -14,6 +15,7 @@ function App() {
         <Link to="/" style={{ marginRight: '1rem' }}>Home</Link>
         <Link to="/profile" style={{ marginRight: '1rem' }}>Profile</Link>
         <Link to="/posts/1" style={{ marginRight: '1rem' }}>Sample Post</Link>
+        <Link to="/blog/1" style={{ marginRight: '1rem' }}>Sample Blog Post</Link> {/* Added Blog link */}
         <Link to="/login">Login</Link>
       </nav>
       <Routes>
@@ -28,6 +30,7 @@ function App() {
           }
         />
         <Route path="/posts/:postId" element={<Post />} />
+        <Route path="/blog/:id" element={<BlogPost />} /> {/* Added BlogPost route */}
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
